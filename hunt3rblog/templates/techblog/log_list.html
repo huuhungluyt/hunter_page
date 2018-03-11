@@ -1,0 +1,30 @@
+{% extends 'incs/_page.html' %}
+
+{% block title %} - Logs{% endblock %}
+
+{% block container%}
+<p><a class="btn btn-success" href="{% url 'techblog:log_list' %}">Refresh</a></p>
+<table class="table">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Time</th><th width="70px">IP Address</th><th>Name</th><th>Action</th><th>Accessed URL</th><th width="500px">Message</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% if log_list %}
+        {% for log in log_list %}
+        <tr>
+            <td>{{log.time}}</td>
+        <td>{{log.ip_addr}}</td>
+        <td>{{log.user}}</td>
+        <td>{{log.action}}</td>
+        <td><a href="{{log.accessed_url}}">{{log.accessed_url}}</a></td>
+        <td>{{log.message}}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+</tbody>
+</table>
+
+{% endblock %}

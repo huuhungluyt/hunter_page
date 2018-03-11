@@ -1,0 +1,35 @@
+{% extends "polls/includes/_header.html" %}
+
+
+{% block content %}
+
+{% if top_question %}
+<h3>Top 5 questions: </h3>
+<ul>
+    {% for question in top_question %}
+    <li>
+        <a href="/polls/{{question.id}}"> {{question.question_text}}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="/polls/all">More ...</a>
+
+{% elif all_question %}
+<h3>All of questions: </h3>
+<ul>
+    {% for question in all_question %}
+    <li>
+        <a href="/polls/{{question.id}}"> {{question.question_text}}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="/polls/t">Top 5</a>
+{% else %}
+
+<p>No item!</p>
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+
+.terminal{
+    font-size:17px;
+    font-family: Courier New, Courier, monospace;
+}

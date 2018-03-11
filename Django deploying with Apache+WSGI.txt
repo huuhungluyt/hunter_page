@@ -1,0 +1,55 @@
+Step 1 : Create Django project (https://simpleisbetterthancomplex.com/series/2017/09/04/a-complete-beginners-guide-to-django-part-1.html) with python3.5
+
+Step 2 : Assume your project at /home/enclaveit/mydjangoenv/myproject. Configure file settings.py, add/edit follow lines:
+	ALLOW_HOSTS=['localhost', '127.0.0.1', 'your_ip_address']
+	DEBUG=False
+	DATABASES = {
+    		'default': {
+        		'ENGINE': 'django.db.backends.mysql',
+        		'NAME': ,
+        		'USER': ,
+        		'PASSWORD': ,
+        		'HOST': ,
+        		'POST': 3306
+    		}
+	}
+	TIME_ZONE = 'Asia/Ho_Chi_Minh'
+	STATIC_ROOT = 'static/'
+
+Step 3 : Install follow packages to connect MySQL:
+	In global environment: sudo apt-get install python3-dev libmysqlclient-dev g++ build-essential
+	In virtual environment: pip install mysqlclient
+
+Step 4 : In project, run ./manage.py with follow commands:
+	collectstatic
+	makemigrations
+	migrate
+	createsuperuser
+
+Step 5 : Copy project to folder /var/www/html
+	sudo mv /home/enclaveit/mydjangoenv /var/www/html
+
+
+Step 6 : Install Apache2 and WSGI package:
+	sudo apt-get install apache2 libapache2-mod-wsgi-py3
+
+Step 7 : Configure apache2:
+	At /etc/apache2/apache2.conf, add line "ServerName 127.0.0.1" and run "sudo apache2ctl configtest"
+	Back-up file /etc/apache2/sites-available/000-default.conf by command: sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.bak
+	At /etc/apache2/site-available/000-default.conf, add lines to <VirtualHost> tag:
+	Alias /static /var/www/html/mydjangoenv/myproject/static
+        <Directory /var/www/html/mydjangoenv/myproject/static>
+                Require all granted
+        </Directory>
+
+        <Directory /var/www/html/mydjangoenv/myproject/myproject>
+                <Files wsgi.py>
+                        Require all granted
+                </Files>
+        </Directory>
+
+        WSGIDaemonProcess hello python-path=/var/www/html/mydjangoenv/myproject python-home=/var/www/html/mydjangoenv/venv
+        WSGIProcessGroup hello
+        WSGIScriptAlias / /var/www/html/mydjangoenv/myproject/myproject/wsgi.py process-group=hello
+
+Step 8 : Restart Apache2 by command "sudo apache2ctl restart" and access http://localhost/ to test. 

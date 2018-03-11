@@ -1,0 +1,156 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>
+        Hunt3r's blog{% block title %}{% endblock %}
+        </title>
+        <link rel="stylesheet" href="{% static 'techblog/css/hacker_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'techblog/css/style.css' %}">
+        {% block makeup %}{% endblock %}
+    </head>
+    <body>
+
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'techblog:index' %}">Hunt3r's page</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                            
+                            <li>
+                                <a href="{% url 'techblog:index' %}">H0M3</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'techblog:topic_list' %}">T0P1C5</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'techblog:post_list' %}">P05T5</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">4B0U7 M3</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'techblog:log_list' %}">L09</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">{{user.username}}<span class="caret"></span> </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">My account</a></li>
+                                    <li><a href="#">Change password</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a href="{% url 'accounts:login' %}" class="btn btn-outline-secondary">Log in</a>
+                            </li>
+                            <li>
+                                <a style="color:black;" href="{% url 'accounts:signup' %}" class="btn btn-primary">Sign up</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <div class="container">
+        {% block container %}
+
+                <!-- Jumbotron -->
+                <div class="jumbotron"style="padding:30px;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="{% static 'techblog/img/ava.jpg' s%}" class="img-thumbnail" alt="Cinque Terre"> 
+                        </div>
+                        <div class="col-md-9" >
+                            <div id="first-terminal">
+                            </div>     
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <ol class="breadcrumb my-4">
+                            {% block breadcumb %}{% endblock %}
+                        </ol>
+                        <hr>
+                            {% block content %}{% endblock %}
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><a href="{% url 'techblog:log_list' %}"><div>Log</div></a></div>
+                            <div class="panel-body">
+                                <p>09:09 09/09/1995 - Hunt3r posted</p>
+                                <p>09:09 09/09/1995 - Hunt3r posted</p>
+                                <p>09:09 09/09/1995 - Hunt3r posted</p>
+                                <p>09:09 09/09/1995 - Hunt3r posted</p>
+                                <p>09:09 09/09/1995 - Hunt3r posted</p>
+                            </div>
+                        </div>
+            
+                        <div class="panel panel-success">
+                            <div class="panel-heading">Blog map</div>
+                            <div class="panel-body">
+                                {% if topics %}
+                                {% for topic in topics %}
+                                    <ul><strong><a href="{% url 'techblog:topic_detail' topic.id %}">{{topic.title}}</a></strong></ul>
+                                    {% for post in topic.post_set.all %}
+                                    <li><a href="{% url 'techblog:post_detail' post.id %}">{{post.title}}</a></li>
+                                    {% endfor %}
+                                    <hr>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {% block ext_content %}{% endblock %}
+                    </div>
+                </div>
+        {% endblock %}
+        </div>
+
+
+        <script src="{% static 'techblog/js/jquery.js' %}"></script>
+        <script src="{% static 'techblog/js/bootstrap.js' %}"></script>
+        {% block script %}
+        <script src="{% static 'techblog/js/typewrite.js' %}"></script>
+        <script src="{% static 'techblog/js/hunt3r_custom.js' %}"></script>
+        <script>
+            var terminal=[
+                { command: true, line: 'root@userpc:~# ', speed: 0 },
+                { command: false, line: 'ping hunt3r', speed: 150 },
+                { command: false, line: 'Type escape sepuence to abort.', speed: 5 },
+                { command: false, line: 'Sending 5, 100-byte ICMP Echos to hunt3r, timeout is 2 seconds:', speed: 5 },
+                { command: false, line: '!!!!!', speed: 300 },
+                { command: false, line: 'Success rate is 100 percent (5/5), round-trip min/avg/max = 8/13/24 ms', speed: 5 },
+                { command: true, line: 'root@userpc:~# ', speed: 0 },
+                { command: false, line: 'nslookup hunt3r', speed: 150 },
+                { command: false, line: '...', speed: 5 },
+                { command: false, line: 'Non-authoritative answer:', speed: 5 },
+                { command: false, line: 'Name: Hung (hunter) H. NGUYEN', speed: 5 },
+                { command: false, line: 'Address: 192.168.21.37', speed: 5 }
+            ]
+
+            hunt3r_typewriter('first-terminal', terminal)
+
+        </script>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,75 @@
+{% extends 'incs/_page.html' %}
+
+{% load widget_tweaks %}
+
+
+{% block title %}
+{% if post %}
+ - Post: {{post.title}}
+{% else %}
+ - Post not found 
+{% endif %}
+{% endblock %}
+
+
+{% block makeup %}
+<style>
+    #post-text p{
+        font-size: 20px;
+        font-family:Courier New, Courier, monospace;
+    }
+</style>
+{% endblock %}
+
+
+{% block breadcumb %}
+    <li class="breadcrumb-item"><a href="{% url 'techblog:index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'techblog:topic_list' %}">Topics</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'techblog:topic_detail' post.topic.id %}">{{post.topic.title}}</a></li>
+    <li class="breadcrumb-item active"><a href="#">{{post.title}}</a></li>
+{% endblock %}
+
+
+{% block content %}
+            {% if post %}
+            <h4>Time created: {{post.time_created}}</h4>
+            <h4>Poster: {{post.poster}}</h4>
+            <div class="jumbotron"style="padding:30px;">
+                <div id="post-text">
+                    {{post.content|linebreaks}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                
+
+                <div class="panel-heading"><h3 class="panel-title">Comments</h3></div>
+                <div class="panel-body">
+                        {% for comment in post.comment_set.all %}
+                        <div class="alert alert-dismissible alert-warning">
+                                <h4>{{comment.content|linebreaks}}</h4>
+                                <div class="row" style="color:white;">
+                                    <p class="col-md-4">{{comment.reader}}</p>
+                                    <p class="col-md-4"></p>
+                                    <p class="col-md-4">{{comment.time_created}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                </div>
+            </div>
+            <div class="well">
+                <form action="{% url 'techblog:post_comment' post.id %}" method="POST" class="form-horizontal">
+                    {% csrf_token %}
+                    {% if form %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            {% render_field field class="form-control"%}
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    <input class="btn btn-success" style='color:black;' type="submit" value="Comment">
+                </form>
+            </div>
+            {% else %}
+            <h3>Post not found.</h3>
+            {% endif %}
+{% endblock %}

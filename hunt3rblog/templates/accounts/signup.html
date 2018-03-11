@@ -1,0 +1,38 @@
+{% extends 'incs/_page.html' %}
+{% block title %}Hunt3r's page - Sign up{% endblock %}
+
+{% block menubar %}{% endblock %}
+
+{% block container %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Sign up</h3>
+                    <form method="POST">
+                    {% csrf_token %}
+                    {% load widget_tweaks %}
+
+                        {% for field in signup_form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+
+                                {% render_field field class="form-control"%}
+
+                            {% if field.help_text %}
+                            <small class="form-text text-muted" style="color:yellow;">
+                                {{ field.help_text|safe }}  <!-- new code here -->
+                            </small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    <button type="submit" class="btn btn-primary btn-block">Create an account</button>
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Already have an account? <a href="{% url 'accounts:login' %}">Log in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

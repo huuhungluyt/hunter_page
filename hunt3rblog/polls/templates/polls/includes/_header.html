@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>ASKLY</title>
+    <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
+</head>
+
+
+<body>
+    <h2>Statistics page of personal information</h2>
+    
+    
+    [ <a href="/polls">Home</a> | <a href="{% url 'polls:result'%}">Results</a> | <a href="{% url 'polls:add_question' %}">Add question</a> | <a href="#">About</a> | <a href="/admin">Admin</a> ] <br>
+    
+    <hr align="left" width="50%">
+    
+    {% block content %}{% endblock %}
+</body>
+
+
+
+
+</html>

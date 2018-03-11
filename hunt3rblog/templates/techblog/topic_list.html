@@ -1,0 +1,38 @@
+{% extends 'incs/_page.html' %}
+
+
+
+{% block title %}
+{% if topic_list %}
+ - Topics
+{% else %}
+ - No topic
+{% endif %}
+{% endblock %}
+
+
+
+{% block breadcumb %}
+    <li class="breadcrumb-item"><a href="{% url 'techblog:index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Topics</a></li>
+{% endblock %}
+
+{% block content %}
+    {% if topic_list %}
+    {% for topic in topic_list %}
+    <a href="{% url 'techblog:topic_detail' topic.id %}">
+        <div class="jumbotron"style="padding:30px;">
+                <div class="row">
+                    <div class="col-md-12" >
+                        <h3><strong>{{topic.title}}</strong></h3>
+                        <h4><b>Description:</b>{{topic.description}}</h4>
+                        <h5><b>Date created: </b>{{topic.time_created}}</h5>
+                    </div>
+                </div>
+        </div>
+    </a>
+    {% endfor %}
+    {% else %}
+    <h3>No topic.</h3>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "polls/includes/_header.html" %}
+
+
+{% block content %}
+
+<h3>SUCCESSFULLY !</h3>
+
+
+<script>
+    window.setTimeout(function(){
+
+        // Move to a new location or you can do something else
+        window.location.href = "{{pre_link}}";
+
+    }, 1000);
+</script> 
+
+{% endblock %}

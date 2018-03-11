@@ -1,0 +1,25 @@
+{% extends "polls/includes/_header.html" %}
+
+
+{% block content %}
+
+{% if questions %}
+    {% for question in questions %}
+                    <h3>{{forloop.counter}}./ {{question.question_text}}</h3>
+                    <table border="1px">
+                        {% for choice in question.choice_set.all %}
+                        {% if choice.question == question %}
+                        <tr>
+                            <td>{{choice.choice_text}}</td>
+                            <td><i><b>{{choice.votes}}</b></i></td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+            
+    {% endfor %}
+<!-- {% endif %} -->
+
+
+{% endblock %}

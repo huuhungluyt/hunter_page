@@ -1,0 +1,29 @@
+{% extends "polls/includes/_header.html" %}
+
+
+{% block content %}
+
+    {% if question_object %}
+    <h3><i>{{question_object.question_text}}</i></h3>
+
+        {% if choices %}
+        <form action="" method="post">
+                {% csrf_token %}
+                {{ vote_form }}
+                <input type="submit" value="Submit" />
+            </form>
+
+
+        {% else %}
+
+        <p>Do not have any choice for this question.</p>
+
+        {% endif %}
+    <h4>You can add a new choice:</h4>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ add_form }}
+        <input type="submit" value="Submit" />
+    </form>
+    {% endif %}
+{% endblock %}

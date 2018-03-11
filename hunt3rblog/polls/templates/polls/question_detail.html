@@ -1,0 +1,25 @@
+{% extends "polls/includes/_header.html" %}
+
+
+{% block content %}
+
+{% if question_object %}
+
+<h3>Information of question: </h3>
+<table border="1px">
+    <tr>
+        <th>Question ID</th><th>Question content</th><th>Published date</th>
+    </tr>
+    <tr>
+        <td>{{question_object.id}}</td>
+        <td>{{question_object.question_text}}</td>
+        <td>{{question_object.pub_date}}</td>
+    </tr>
+</table>
+
+<a href="/polls/{{question_object.id}}/vote">Votes</a>
+{% endif %}
+
+
+
+{% endblock %}
